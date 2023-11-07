@@ -1,11 +1,18 @@
-import express from 'express'
-
-const app = express()
-
-app.get("/", (req, res) => {
-  res.send ('Hello, world!')  
+// Import the framework and instantiate it
+import Fastify from 'fastify'
+const fastify = Fastify({
+  logger: true
 })
 
-app.listen(3000, () => {
-  console.log('Server is listening on port 3000')
+// Declare a route
+fastify.get('/', function (request, reply) {
+  return { hello: 'world' }
+})
+
+// Run the server!
+fastify.listen({ port: 3000 }, (err) => {
+  if (err !== null) {
+    fastify.log.error(err)
+    process.exit(1)
+  }
 })
